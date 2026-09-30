@@ -1,4 +1,4 @@
-# 🏥 Aplikasi Mobile Rumah Sakit
+#  Aplikasi Mobile Rumah Sakit
 
 Aplikasi mobile yang dirancang untuk membantu pasien dalam melakukan **pengambilan nomor kunjungan dokter** dan **pengambilan obat** tanpa harus mengantre terlalu lama secara langsung di rumah sakit.
 
@@ -6,7 +6,7 @@ Aplikasi ini bertujuan untuk meningkatkan kenyamanan pasien serta membantu rumah
 
 ---
 
-## 📌 Latar Belakang
+## Latar Belakang
 
 Proses pelayanan di rumah sakit sering kali membuat pasien harus menunggu dalam antrean, baik saat ingin melakukan kunjungan dokter maupun ketika mengambil obat di bagian farmasi.
 
@@ -16,7 +16,7 @@ Aplikasi ini diharapkan dapat mengurangi penumpukan pasien di area pendaftaran, 
 
 ---
 
-## 🎯 Tujuan
+##  Tujuan
 
 Tujuan dari pengembangan aplikasi ini adalah:
 
@@ -30,7 +30,7 @@ Tujuan dari pengembangan aplikasi ini adalah:
 
 ---
 
-## 👥 Target Pengguna
+##  Target Pengguna
 
 Aplikasi ini memiliki beberapa jenis pengguna:
 
@@ -74,9 +74,9 @@ Dokter dapat:
 
 ---
 
-# 📱 Fitur Utama
+#  Fitur Utama
 
-## 1. 🔐 Login & Registrasi
+## 1.  Login & Registrasi
 
 Pasien dapat membuat akun menggunakan data yang diperlukan oleh rumah sakit.
 
@@ -90,7 +90,7 @@ Fitur:
 
 ---
 
-## 2. 👨‍⚕️ Pendaftaran Kunjungan Dokter
+## 2.  Pendaftaran Kunjungan Dokter
 
 Pasien dapat memilih layanan yang ingin digunakan.
 
@@ -122,7 +122,7 @@ Informasi yang ditampilkan:
 
 ---
 
-## 3. 🎫 Nomor Antrean
+## 3.  Nomor Antrean
 
 Setelah melakukan pendaftaran, pasien mendapatkan nomor antrean.
 
@@ -152,7 +152,7 @@ Nomor antrean dapat diperbarui secara berkala berdasarkan antrean yang sedang be
 
 ---
 
-## 4. 🔔 Notifikasi Antrean
+## 4.  Notifikasi Antrean
 
 Pasien mendapatkan notifikasi ketika nomor antreannya sudah mendekati giliran.
 
@@ -169,7 +169,7 @@ Harap bersiap menuju ruang poli.
 
 ---
 
-## 5. 💊 Antrean Pengambilan Obat
+## 5.  Antrean Pengambilan Obat
 
 Setelah dokter memberikan resep, pasien dapat melihat status resep melalui aplikasi.
 
@@ -201,7 +201,7 @@ Status obat:
 
 ---
 
-# 💊 Nomor Antrean Farmasi
+#  Nomor Antrean Farmasi
 
 Pasien mendapatkan nomor antrean khusus untuk pengambilan obat.
 
@@ -227,7 +227,7 @@ Sisa Antrean   : 4
 
 ---
 
-# 📊 Dashboard
+# Dashboard
 
 Dashboard pasien menampilkan informasi penting seperti:
 
@@ -262,7 +262,7 @@ Halo, Nama Pasien 👋
 
 ---
 
-# 🏗️ Rencana Arsitektur Sistem
+#  Rencana Arsitektur Sistem
 
 Secara umum sistem direncanakan menggunakan arsitektur:
 
@@ -289,7 +289,7 @@ Mobile application berkomunikasi dengan backend melalui API. Backend bertanggung
 
 ---
 
-# 🗄️ Rencana Database
+# Rencana Database
 
 Beberapa tabel yang direncanakan:
 
@@ -356,7 +356,7 @@ Beberapa tabel yang direncanakan:
 
 ---
 
-# 🔄 Alur Sistem
+#  Alur Sistem
 
 ## Kunjungan Dokter
 
@@ -402,7 +402,7 @@ Status Selesai
 
 ---
 
-# 🛠️ Teknologi yang Direncanakan
+#  Teknologi yang Direncanakan
 
 Teknologi dapat disesuaikan dengan kebutuhan proyek.
 
@@ -432,7 +432,7 @@ Teknologi dapat disesuaikan dengan kebutuhan proyek.
 
 ---
 
-# 📁 Struktur Repository
+#  Struktur Repository
 
 Contoh struktur repository:
 
@@ -465,7 +465,7 @@ hospital-mobile-app/
 
 ---
 
-# 🚀 Tahapan Pengembangan
+#  Tahapan Pengembangan
 
 ### Phase 1 — Analisis
 
@@ -526,7 +526,7 @@ hospital-mobile-app/
 
 ---
 
-# 🔐 Keamanan
+#  Keamanan
 
 Karena aplikasi menangani data pasien, keamanan menjadi salah satu aspek penting.
 
@@ -543,7 +543,7 @@ Beberapa hal yang direncanakan:
 
 ---
 
-# 📌 Pengembangan Selanjutnya
+#  Pengembangan Selanjutnya
 
 Beberapa fitur yang dapat dikembangkan pada tahap berikutnya:
 
@@ -560,7 +560,7 @@ Beberapa fitur yang dapat dikembangkan pada tahap berikutnya:
 
 ---
 
-# 👨‍💻 Status Project
+# Status Project
 
 **Status:** 🚧 Dalam Perencanaan / Development
 
@@ -568,6 +568,6 @@ Project ini masih dalam tahap perencanaan dan pengembangan awal.
 
 ---
 
-## 📄 Catatan
+## Catatan
 
 Aplikasi ini merupakan rancangan sistem untuk membantu meningkatkan efisiensi proses antrean pasien di rumah sakit. Implementasi pada lingkungan rumah sakit sebenarnya memerlukan penyesuaian dengan prosedur operasional, sistem informasi rumah sakit, serta ketentuan keamanan dan privasi data yang berlaku.
