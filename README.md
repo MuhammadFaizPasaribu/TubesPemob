@@ -1,100 +1,139 @@
-#  Aplikasi Mobile Rumah Sakit
+# 🏥 Mobile Hospital Queue & Pharmacy System
 
-Aplikasi mobile yang dirancang untuk membantu pasien dalam melakukan **pengambilan nomor kunjungan dokter** dan **pengambilan obat** tanpa harus mengantre terlalu lama secara langsung di rumah sakit.
+Aplikasi mobile rumah sakit yang membantu pasien melakukan **pengambilan nomor antrean dokter** melalui aplikasi. Setelah pasien mendapatkan pelayanan dari dokter, dokter dapat mengirimkan **resep obat secara digital ke bagian farmasi** melalui sistem.
 
-Aplikasi ini bertujuan untuk meningkatkan kenyamanan pasien serta membantu rumah sakit dalam mengelola antrean secara lebih terstruktur dan efisien.
-
----
-
-## Latar Belakang
-
-Proses pelayanan di rumah sakit sering kali membuat pasien harus menunggu dalam antrean, baik saat ingin melakukan kunjungan dokter maupun ketika mengambil obat di bagian farmasi.
-
-Dengan adanya aplikasi mobile ini, pasien dapat mengambil nomor antrean melalui smartphone sebelum datang atau ketika sudah berada di rumah sakit. Pasien juga dapat melihat informasi nomor antrean yang sedang berjalan sehingga dapat memperkirakan waktu pelayanan.
-
-Aplikasi ini diharapkan dapat mengurangi penumpukan pasien di area pendaftaran, poli, dan farmasi serta membuat proses pelayanan menjadi lebih terorganisir.
+Pasien kemudian dapat melihat status resep dan mengambil obat setelah obat selesai diproses oleh farmasi.
 
 ---
 
-##  Tujuan
+## 📌 Latar Belakang
 
-Tujuan dari pengembangan aplikasi ini adalah:
+Proses pelayanan pasien di rumah sakit biasanya melibatkan beberapa tahapan, mulai dari mengambil nomor antrean, menunggu pemeriksaan dokter, menerima resep, hingga mengambil obat di farmasi.
 
-* Mempermudah pasien dalam mengambil nomor antrean kunjungan dokter.
-* Mempermudah pasien dalam melakukan antrean pengambilan obat.
-* Mengurangi waktu tunggu pasien di rumah sakit.
-* Memberikan informasi mengenai status dan nomor antrean secara real-time.
-* Membantu rumah sakit mengelola antrean pasien dengan lebih terstruktur.
-* Mengurangi penumpukan pasien pada area pelayanan.
-* Meningkatkan efisiensi pelayanan rumah sakit.
+Sistem ini dirancang untuk mengintegrasikan proses tersebut dalam satu aplikasi sehingga pasien tidak perlu melakukan proses antrean secara manual dari awal hingga akhir.
+
+Dengan sistem ini, pasien dapat mengambil nomor antrean melalui aplikasi, dokter dapat melihat antrean pasien, dan resep dapat langsung dikirimkan ke farmasi melalui sistem.
 
 ---
 
-##  Target Pengguna
+#  Tujuan
 
-Aplikasi ini memiliki beberapa jenis pengguna:
+Aplikasi ini bertujuan untuk:
 
-### 1. Pasien
+* Mempermudah pasien mengambil nomor antrean dokter.
+* Mengurangi antrean manual di rumah sakit.
+* Membantu dokter melihat daftar pasien yang menunggu.
+* Mempermudah dokter mengirim resep ke farmasi.
+* Membantu farmasi menerima dan memproses resep secara digital.
+* Memberikan informasi status obat kepada pasien.
+* Membuat proses pelayanan pasien menjadi lebih terintegrasi.
+
+---
+
+# Aktor Sistem
+
+Sistem memiliki 3 aktor utama:
+
+###  Pasien
 
 Pasien dapat:
 
-* Membuat akun dan login.
-* Melengkapi data diri.
-* Melihat daftar dokter dan poli.
-* Memilih dokter atau poli yang ingin dikunjungi.
-* Mengambil nomor antrean kunjungan dokter.
-* Melihat nomor antrean yang sedang dilayani.
-* Melihat estimasi antrean.
-* Mendapatkan notifikasi ketika antrean mendekati giliran.
-* Melihat riwayat kunjungan.
-* Mengambil nomor antrean pengambilan obat.
-* Melihat status obat yang sudah siap diambil.
+* Login ke aplikasi.
+* Melihat daftar poli/dokter.
+* Mengambil nomor antrean.
+* Melihat nomor antrean saat ini.
+* Melihat status antrean.
+* Mendapatkan notifikasi ketika mendekati giliran.
+* Melihat resep dari dokter.
+* Melihat status obat.
+* Mengambil obat di farmasi.
 
-### 2. Petugas Rumah Sakit
-
-Petugas dapat:
-
-* Melihat daftar antrean pasien.
-* Memanggil nomor antrean.
-* Mengubah status antrean.
-* Mengelola data pasien.
-* Mengelola jadwal dokter.
-* Mengelola data poli.
-* Mengelola antrean farmasi.
-* Mengubah status obat menjadi siap diambil.
-
-### 3. Dokter
+### 👨‍⚕️ Dokter
 
 Dokter dapat:
 
+* Login ke aplikasi.
 * Melihat daftar pasien yang sedang menunggu.
-* Melihat nomor antrean pasien.
-* Memanggil pasien berikutnya.
-* Melihat informasi dasar pasien yang diperlukan untuk pelayanan.
+* Memanggil pasien berdasarkan nomor antrean.
+* Melihat informasi pasien yang diperlukan.
+* Melakukan pemeriksaan.
+* Membuat resep obat.
+* Mengirim resep secara digital ke farmasi.
+* Melihat status resep.
+
+### Farmasi
+
+Petugas farmasi dapat:
+
+* Melihat resep yang dikirim dokter.
+* Melihat data obat yang diresepkan.
+* Memproses resep.
+* Mengubah status resep.
+* Memberikan informasi bahwa obat sudah siap diambil.
+* Mengubah status menjadi obat telah diambil.
 
 ---
 
-#  Fitur Utama
+# Alur Utama Sistem
 
-## 1.  Login & Registrasi
+Alur utama aplikasi:
 
-Pasien dapat membuat akun menggunakan data yang diperlukan oleh rumah sakit.
-
-Fitur:
-
-* Registrasi akun.
-* Login.
-* Logout.
-* Lupa password.
-* Pengelolaan profil pasien.
+```text
+┌──────────────┐
+│    PASIEN    │
+└──────┬───────┘
+       │
+       ▼
+Ambil Nomor Antrean
+       │
+       ▼
+Menunggu Antrean
+       │
+       ▼
+┌──────────────┐
+│    DOKTER    │
+└──────┬───────┘
+       │
+       ▼
+Dokter Memanggil Pasien
+       │
+       ▼
+Pemeriksaan Pasien
+       │
+       ▼
+Dokter Membuat Resep
+       │
+       ▼
+Kirim Resep ke Sistem
+       │
+       ▼
+┌──────────────┐
+│   FARMASI    │
+└──────┬───────┘
+       │
+       ▼
+Farmasi Menerima Resep
+       │
+       ▼
+Menyiapkan Obat
+       │
+       ▼
+Obat Siap Diambil
+       │
+       ▼
+Pasien Mendapat Notifikasi
+       │
+       ▼
+Pasien Mengambil Obat
+```
 
 ---
 
-## 2.  Pendaftaran Kunjungan Dokter
+# 1. Pengambilan Nomor Antrean
 
-Pasien dapat memilih layanan yang ingin digunakan.
+Pasien membuka aplikasi dan memilih dokter atau poli yang ingin dikunjungi.
 
-Alur:
+### Alur:
 
 ```text
 Login
@@ -103,310 +142,331 @@ Pilih Poli
   ↓
 Pilih Dokter
   ↓
-Pilih Tanggal
-  ↓
 Ambil Nomor Antrean
   ↓
-Nomor Antrean Berhasil
+Nomor Antrean Diperoleh
+  ↓
+Menunggu
 ```
-
-Informasi yang ditampilkan:
-
-* Nama poli
-* Nama dokter
-* Tanggal kunjungan
-* Jam praktik
-* Nomor antrean
-* Jumlah pasien yang menunggu
-* Status antrean
-
----
-
-## 3.  Nomor Antrean
-
-Setelah melakukan pendaftaran, pasien mendapatkan nomor antrean.
 
 Contoh:
 
 ```text
 ================================
-       NOMOR ANTREAN
+        NOMOR ANTREAN
 ================================
 
-          A-025
+            A-025
 
 Poli Penyakit Dalam
-Dr. Nama Dokter
+Dr. Ahmad
 
-Nomor Saat Ini : A-018
-Antrean Anda   : A-025
+Sedang Dilayani : A-020
+Nomor Anda      : A-025
 
-Sisa Antrean   : 7 pasien
+Sisa Antrean    : 5 Pasien
+
+Status: MENUNGGU
+================================
+```
+
+---
+
+# 2. Dokter Melihat Antrean
+
+Dokter memiliki halaman yang menampilkan pasien yang sedang menunggu.
+
+Contoh:
+
+```text
+================================
+          ANTREAN PASIEN
+================================
+
+A-023   Budi       [Panggil]
+A-024   Andi       [Panggil]
+A-025   Siti       [Panggil]
+A-026   Rina       [Panggil]
+
+================================
+```
+
+Dokter memanggil pasien sesuai urutan antrean.
+
+Setelah pasien dipanggil:
+
+```text
+A-023
+Status: SEDANG DIPERIKSA
+```
+
+---
+
+# 3. Pemeriksaan Dokter
+
+Setelah pasien masuk ke ruang pemeriksaan, dokter melakukan pemeriksaan.
+
+Setelah pemeriksaan selesai, dokter dapat membuat resep melalui aplikasi.
+
+Contoh:
+
+```text
+Pasien:
+Siti
+
+Keluhan:
+Demam dan sakit kepala
+
+Resep:
+- Paracetamol 500 mg
+- Obat X 10 tablet
+
+[ KIRIM RESEP ]
+```
+
+---
+
+# 4. Dokter Mengirim Resep ke Farmasi
+
+Setelah dokter menekan tombol **Kirim Resep**, resep langsung masuk ke sistem farmasi.
+
+```text
+Dokter
+   │
+   │ Kirim Resep
+   ▼
+┌───────────────┐
+│    SERVER     │
+└───────┬───────┘
+        │
+        │ Resep Baru
+        ▼
+┌───────────────┐
+│    FARMASI    │
+└───────────────┘
+```
+
+Status resep:
+
+```text
+RESEP TERKIRIM
+       ↓
+SEDANG DIPROSES
+       ↓
+OBAT SIAP DIAMBIL
+       ↓
+SUDAH DIAMBIL
+```
+
+---
+
+# 5. Farmasi Memproses Resep
+
+Petugas farmasi melihat resep yang masuk.
+
+Contoh:
+
+```text
+================================
+          RESEP MASUK
+================================
+
+No. Resep     : RX-00125
+Pasien        : Siti
+Dokter        : Dr. Ahmad
+
+Obat:
+1. Paracetamol 500 mg
+   Jumlah: 10
+
+2. Obat X
+   Jumlah: 10
 
 Status:
-Menunggu
+[ PROSES RESEP ]
 ================================
 ```
 
-Nomor antrean dapat diperbarui secara berkala berdasarkan antrean yang sedang berjalan.
+Setelah obat selesai disiapkan, petugas mengubah status menjadi:
+
+**OBAT SIAP DIAMBIL**
 
 ---
 
-## 4.  Notifikasi Antrean
+# 6. Pasien Mendapat Notifikasi
 
-Pasien mendapatkan notifikasi ketika nomor antreannya sudah mendekati giliran.
+Pasien mendapatkan notifikasi melalui aplikasi.
 
 Contoh:
 
 ```text
-🔔 Antrean Anda hampir tiba!
+ Obat Anda sudah siap
 
-Nomor antrean Anda: A-025
-Nomor yang sedang dilayani: A-022
+Resep: RX-00125
 
-Harap bersiap menuju ruang poli.
+Obat sudah selesai diproses
+dan dapat diambil di Farmasi.
+
+Silakan menuju loket farmasi.
 ```
 
 ---
 
-## 5.  Antrean Pengambilan Obat
+# 7. Pengambilan Obat
 
-Setelah dokter memberikan resep, pasien dapat melihat status resep melalui aplikasi.
-
-Alur:
-
-```text
-Kunjungan Dokter
-       ↓
-    Resep Obat
-       ↓
-   Farmasi Menerima
-       ↓
-   Obat Diproses
-       ↓
-   Obat Siap Diambil
-       ↓
-Pasien Mendapat Notifikasi
-       ↓
-Ambil Obat
-```
-
-Status obat:
-
-* `Resep Diterima`
-* `Sedang Diproses`
-* `Sedang Disiapkan`
-* `Siap Diambil`
-* `Sudah Diambil`
-
----
-
-#  Nomor Antrean Farmasi
-
-Pasien mendapatkan nomor antrean khusus untuk pengambilan obat.
+Pasien datang ke bagian farmasi dan menunjukkan informasi resep atau kode pengambilan pada aplikasi.
 
 Contoh:
 
 ```text
 ================================
-       ANTREAN FARMASI
+       PENGAMBILAN OBAT
 ================================
 
-          F-032
+Kode Resep:
 
-Status Obat:
-✅ Resep diterima
-✅ Obat sedang disiapkan
+          RX-00125
 
-Nomor Saat Ini : F-028
-Nomor Anda     : F-032
+Pasien:
+Siti
 
-Sisa Antrean   : 4
+Status:
+✅ SIAP DIAMBIL
+
+[ TUNJUKKAN KODE ]
 ================================
+```
+
+Setelah obat diberikan kepada pasien, petugas mengubah status menjadi:
+
+```text
+SUDAH DIAMBIL
 ```
 
 ---
 
-# Dashboard
+# Status Sistem
 
-Dashboard pasien menampilkan informasi penting seperti:
-
-* Antrean dokter.
-* Antrean farmasi.
-* Jadwal kunjungan.
-* Status resep.
-* Notifikasi.
-* Riwayat kunjungan.
-
-Contoh tampilan:
+### Antrean Pasien
 
 ```text
-Halo, Nama Pasien 👋
-
-┌─────────────────────────┐
-│ Antrean Dokter          │
-│ A-025                   │
-│ Sedang dilayani: A-022  │
-└─────────────────────────┘
-
-┌─────────────────────────┐
-│ Antrean Farmasi         │
-│ F-032                   │
-│ Status: Diproses        │
-└─────────────────────────┘
-
-[ Riwayat Kunjungan ]
-
-[ Profil ]
+MENUNGGU
+   ↓
+DIPANGGIL
+   ↓
+SEDANG DIPERIKSA
+   ↓
+SELESAI
 ```
 
----
-
-#  Rencana Arsitektur Sistem
-
-Secara umum sistem direncanakan menggunakan arsitektur:
+### Resep
 
 ```text
-              ┌──────────────────┐
-              │   Mobile App     │
-              │     Pasien       │
-              └────────┬─────────┘
-                       │
-                       ▼
-              ┌──────────────────┐
-              │    Backend /     │
-              │       API        │
-              └────────┬─────────┘
-                       │
-          ┌────────────┼────────────┐
-          ▼            ▼            ▼
-     ┌─────────┐  ┌─────────┐  ┌─────────┐
-     │ Database│  │ Dokter  │  │ Petugas │
-     └─────────┘  └─────────┘  └─────────┘
+RESEP DIBUAT
+     ↓
+TERKIRIM KE FARMASI
+     ↓
+DIPROSES
+     ↓
+SIAP DIAMBIL
+     ↓
+SUDAH DIAMBIL
 ```
-
-Mobile application berkomunikasi dengan backend melalui API. Backend bertanggung jawab untuk mengelola data pasien, dokter, jadwal, antrean, resep, dan farmasi.
 
 ---
 
 # Rencana Database
 
-Beberapa tabel yang direncanakan:
+Tabel utama yang digunakan:
 
-### Users
+```text
+users
+  │
+  ├── patients
+  │
+  ├── doctors
+  │
+  └── pharmacists
 
-| Field    | Tipe    | Keterangan            |
-| -------- | ------- | --------------------- |
-| id       | INT     | Primary Key           |
-| name     | VARCHAR | Nama pengguna         |
-| email    | VARCHAR | Email                 |
-| password | VARCHAR | Password              |
-| role     | ENUM    | Pasien/Petugas/Dokter |
+patients
+   │
+   └── queues
+          │
+          └── consultations
+                  │
+                  └── prescriptions
+                         │
+                         └── prescription_items
+```
 
-### Patients
+### Tabel `users`
 
-| Field      | Tipe    | Keterangan    |
-| ---------- | ------- | ------------- |
-| id         | INT     | Primary Key   |
-| user_id    | INT     | Relasi User   |
-| nik        | VARCHAR | NIK pasien    |
-| birth_date | DATE    | Tanggal lahir |
-| phone      | VARCHAR | Nomor telepon |
-| address    | TEXT    | Alamat        |
+| Field    | Keterangan                    |
+| -------- | ----------------------------- |
+| id       | ID user                       |
+| name     | Nama                          |
+| email    | Email                         |
+| password | Password                      |
+| role     | patient / doctor / pharmacist |
 
-### Doctors
+### Tabel `queues`
 
-| Field          | Tipe    | Keterangan   |
-| -------------- | ------- | ------------ |
-| id             | INT     | Primary Key  |
-| name           | VARCHAR | Nama dokter  |
-| specialization | VARCHAR | Spesialisasi |
-| poly_id        | INT     | Poli         |
+| Field        | Keterangan     |
+| ------------ | -------------- |
+| id           | ID antrean     |
+| patient_id   | ID pasien      |
+| doctor_id    | ID dokter      |
+| queue_number | Nomor antrean  |
+| date         | Tanggal        |
+| status       | Status antrean |
 
-### Queues
+### Tabel `consultations`
 
-| Field        | Tipe    | Keterangan     |
-| ------------ | ------- | -------------- |
-| id           | INT     | Primary Key    |
-| patient_id   | INT     | Pasien         |
-| doctor_id    | INT     | Dokter         |
-| queue_number | VARCHAR | Nomor antrean  |
-| date         | DATE    | Tanggal        |
-| status       | VARCHAR | Status antrean |
+| Field      | Keterangan        |
+| ---------- | ----------------- |
+| id         | ID pemeriksaan    |
+| queue_id   | ID antrean        |
+| patient_id | ID pasien         |
+| doctor_id  | ID dokter         |
+| diagnosis  | Diagnosis         |
+| notes      | Catatan dokter    |
+| created_at | Waktu pemeriksaan |
 
-### Prescriptions
+### Tabel `prescriptions`
 
-| Field      | Tipe     | Keterangan   |
-| ---------- | -------- | ------------ |
-| id         | INT      | Primary Key  |
-| patient_id | INT      | Pasien       |
-| doctor_id  | INT      | Dokter       |
-| status     | VARCHAR  | Status resep |
-| created_at | DATETIME | Waktu dibuat |
+| Field           | Keterangan     |
+| --------------- | -------------- |
+| id              | ID resep       |
+| consultation_id | ID pemeriksaan |
+| patient_id      | ID pasien      |
+| doctor_id       | ID dokter      |
+| status          | Status resep   |
+| created_at      | Waktu dibuat   |
 
-### Pharmacy Queues
+### Tabel `prescription_items`
 
-| Field           | Tipe     | Keterangan     |
-| --------------- | -------- | -------------- |
-| id              | INT      | Primary Key    |
-| prescription_id | INT      | Resep          |
-| queue_number    | VARCHAR  | Nomor antrean  |
-| status          | VARCHAR  | Status antrean |
-| created_at      | DATETIME | Waktu dibuat   |
+| Field           | Keterangan |
+| --------------- | ---------- |
+| id              | ID         |
+| prescription_id | ID resep   |
+| medicine_id     | ID obat    |
+| quantity        | Jumlah     |
+| dosage          | Dosis      |
+
+### Tabel `medicines`
+
+| Field | Keterangan |
+| ----- | ---------- |
+| id    | ID obat    |
+| name  | Nama obat  |
+| stock | Stok       |
+| unit  | Satuan     |
 
 ---
 
-#  Alur Sistem
+# 🛠️ Teknologi yang Direncanakan
 
-## Kunjungan Dokter
-
-```text
-Pasien Login
-     ↓
-Pilih Poli
-     ↓
-Pilih Dokter
-     ↓
-Pilih Jadwal
-     ↓
-Ambil Nomor Antrean
-     ↓
-Sistem Memberikan Nomor
-     ↓
-Pasien Menunggu
-     ↓
-Nomor Dipanggil
-     ↓
-Pasien Bertemu Dokter
-```
-
-## Pengambilan Obat
-
-```text
-Dokter Membuat Resep
-        ↓
-Resep Masuk ke Sistem
-        ↓
-Farmasi Menerima Resep
-        ↓
-Obat Diproses
-        ↓
-Obat Siap
-        ↓
-Pasien Mendapat Notifikasi
-        ↓
-Pasien Mengambil Obat
-        ↓
-Status Selesai
-```
-
----
-
-#  Teknologi yang Direncanakan
-
-Teknologi dapat disesuaikan dengan kebutuhan proyek.
-
-### Mobile
+### Mobile Application
 
 * Kotlin
 * Jetpack Compose
@@ -414,7 +474,7 @@ Teknologi dapat disesuaikan dengan kebutuhan proyek.
 
 ### Backend
 
-* Laravel / Node.js
+* Laravel
 * REST API
 
 ### Database
@@ -423,28 +483,25 @@ Teknologi dapat disesuaikan dengan kebutuhan proyek.
 
 ### Authentication
 
-* JWT / Laravel Sanctum
+* Laravel Sanctum
 
 ### Version Control
 
-* Git
-* GitHub
+* Git & GitHub
 
 ---
 
-#  Struktur Repository
-
-Contoh struktur repository:
+# Struktur Repository
 
 ```text
-hospital-mobile-app/
+hospital-app/
 │
 ├── mobile/
 │   ├── app/
-│   ├── components/
 │   ├── screens/
-│   ├── navigation/
+│   ├── components/
 │   ├── models/
+│   ├── navigation/
 │   └── services/
 │
 ├── backend/
@@ -454,120 +511,90 @@ hospital-mobile-app/
 │   └── tests/
 │
 ├── docs/
+│   ├── use-case/
 │   ├── flowchart/
 │   ├── erd/
-│   ├── wireframe/
-│   └── ui-design/
+│   └── ui-ux/
 │
-├── README.md
-└── .gitignore
+└── README.md
 ```
 
 ---
 
-#  Tahapan Pengembangan
+#  Roadmap Pengembangan
 
-### Phase 1 — Analisis
+## Phase 1 — Analisis
 
-* [ ] Mengidentifikasi kebutuhan pasien.
-* [ ] Mengidentifikasi kebutuhan dokter.
-* [ ] Mengidentifikasi kebutuhan petugas.
-* [ ] Membuat use case.
-* [ ] Membuat flowchart.
-* [ ] Membuat ERD.
+* [ ] Analisis kebutuhan sistem
+* [ ] Identifikasi aktor
+* [ ] Use Case Diagram
+* [ ] Activity Diagram
+* [ ] Flowchart
+* [ ] ERD
 
-### Phase 2 — UI/UX
+## Phase 2 — UI/UX
 
-* [ ] Membuat wireframe.
-* [ ] Membuat desain halaman login.
-* [ ] Membuat desain dashboard.
-* [ ] Membuat desain antrean dokter.
-* [ ] Membuat desain antrean farmasi.
-* [ ] Membuat desain profil.
-* [ ] Membuat prototype aplikasi.
+* [ ] Wireframe
+* [ ] Login
+* [ ] Dashboard pasien
+* [ ] Halaman antrean
+* [ ] Dashboard dokter
+* [ ] Halaman resep
+* [ ] Dashboard farmasi
+* [ ] Halaman status obat
 
-### Phase 3 — Backend
+## Phase 3 — Backend
 
-* [ ] Membuat database.
-* [ ] Membuat authentication API.
-* [ ] Membuat API pasien.
-* [ ] Membuat API dokter.
-* [ ] Membuat API antrean.
-* [ ] Membuat API resep.
-* [ ] Membuat API farmasi.
+* [ ] Database
+* [ ] Authentication
+* [ ] API pasien
+* [ ] API dokter
+* [ ] API antrean
+* [ ] API konsultasi
+* [ ] API resep
+* [ ] API farmasi
 
-### Phase 4 — Mobile Development
+## Phase 4 — Mobile
 
-* [ ] Membuat project Android.
-* [ ] Membuat login & registrasi.
-* [ ] Membuat dashboard.
-* [ ] Membuat pemilihan poli.
-* [ ] Membuat pemilihan dokter.
-* [ ] Membuat sistem antrean.
-* [ ] Membuat antrean farmasi.
-* [ ] Membuat notifikasi.
-* [ ] Menghubungkan aplikasi dengan API.
+* [ ] Login & registrasi
+* [ ] Pengambilan nomor antrean
+* [ ] Monitoring antrean
+* [ ] Notifikasi antrean
+* [ ] Integrasi resep
+* [ ] Status obat
+* [ ] Kode pengambilan obat
 
-### Phase 5 — Testing
+## Phase 5 — Testing
 
-* [ ] Unit testing.
-* [ ] API testing.
-* [ ] UI testing.
-* [ ] Integration testing.
-* [ ] User acceptance testing.
-
-### Phase 6 — Deployment
-
-* [ ] Deploy backend.
-* [ ] Setup database production.
-* [ ] Build aplikasi Android.
-* [ ] Pengujian pada perangkat nyata.
-* [ ] Dokumentasi aplikasi.
+* [ ] Unit testing
+* [ ] API testing
+* [ ] Integration testing
+* [ ] UI testing
+* [ ] User acceptance testing
 
 ---
 
 #  Keamanan
 
-Karena aplikasi menangani data pasien, keamanan menjadi salah satu aspek penting.
+Karena aplikasi menangani data pasien dan informasi medis, keamanan menjadi bagian penting dalam pengembangan.
 
-Beberapa hal yang direncanakan:
+Sistem direncanakan menggunakan:
 
-* Password disimpan menggunakan hashing.
-* Authentication menggunakan token.
-* Validasi input pengguna.
-* Role-based access control.
-* Pengamanan API.
-* Pembatasan akses data berdasarkan role.
-* Penggunaan HTTPS.
-* Tidak menyimpan informasi sensitif secara sembarangan di perangkat.
-
----
-
-#  Pengembangan Selanjutnya
-
-Beberapa fitur yang dapat dikembangkan pada tahap berikutnya:
-
-* Pembayaran rumah sakit melalui aplikasi.
-* Konsultasi online.
-* Rekam medis digital.
-* Pengingat jadwal kontrol.
-* Integrasi BPJS.
-* Peta lokasi rumah sakit.
-* Informasi ketersediaan kamar.
-* Chat dengan petugas.
-* Push notification.
-* Integrasi dengan sistem informasi rumah sakit yang sudah ada.
+* Authentication.
+* Authorization berdasarkan role.
+* Password hashing.
+* HTTPS.
+* Validasi input.
+* Proteksi API.
+* Pembatasan akses data pasien.
+* Pengelolaan session/token secara aman.
 
 ---
 
-# Status Project
+#  Ringkasan Sistem
 
-**Status:** 🚧 Dalam Perencanaan / Development
+Secara sederhana, aplikasi ini memiliki konsep:
 
-Project ini masih dalam tahap perencanaan dan pengembangan awal.
+> **Pasien mengambil nomor → Dokter memanggil pasien → Pasien diperiksa → Dokter mengirim resep → Farmasi memproses resep → Pasien mendapat informasi → Pasien mengambil obat.**
 
----
-
-## Catatan
-
-Aplikasi ini merupakan rancangan sistem untuk membantu meningkatkan efisiensi proses antrean pasien di rumah sakit. Implementasi pada lingkungan rumah sakit sebenarnya memerlukan penyesuaian dengan prosedur operasional, sistem informasi rumah sakit, serta ketentuan keamanan dan privasi data yang berlaku.
+Dengan konsep tersebut, proses pelayanan pasien, dokter, dan farmasi dapat terhubung dalam satu sistem.
