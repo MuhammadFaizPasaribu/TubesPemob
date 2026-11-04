@@ -40,18 +40,6 @@ Kalau resep dibuka, pasien melihat statusnya dalam empat tahap: resep diterima f
 
 Level pasien masih setengah jadi. Datanya masih tersimpan di satu HP sehingga belum bisa sinkron antarperangkat. Notifikasinya juga masih lokal dan belum dikirim dari server, dan halaman profil serta fitur ganti kata sandi belum dibuat.
 
-## Peran yang kami sederhanakan
-
-Di rumah sakit, pasien poli biasanya dipanggil oleh perawat. Di aplikasi ini fungsi itu kami gabungkan ke level dokter. Kasir tidak kami buat karena biaya pasien JKN ditanggung BPJS. Pengecekan kepesertaan JKN, penerbitan SEP, dan verifikasi wajah juga masih berupa simulasi, karena integrasi aslinya membutuhkan akses resmi dari BPJS.
-
-## Cara mencoba
-
-Buka folder RawatJalanJKN di Android Studio lewat File > Open, tunggu Gradle Sync selesai, lalu jalankan ke emulator atau HP dengan Android 8.0 ke atas. Data contoh dibuat otomatis saat aplikasi pertama kali dibuka.
-
-Akun resepsionis memakai username resepsionis, akun dokter memakai dokter1 sampai dokter5, dan akun farmasi memakai farmasi. Semuanya dengan sandi 123456. Untuk pasien, pakai akun Budi Santoso dengan No. RM 00012345 dan sandi 15011980.
-
-Supaya ada resep yang tampil di akun pasien, daftarkan dulu Budi Santoso dari akun resepsionis. Setelah itu kirim resep dari akun dokter yang dipilih saat pendaftaran (dokter1 untuk dr. Andi Pratama), lalu proses resepnya dari akun farmasi.
-
 # Aplikasi rawat jalan JKN Rumah Sakit Kensato
 
 Repositori ini berisi aplikasi Android untuk pelayanan rawat jalan pasien JKN di Rumah Sakit Kensato. Aplikasinya dibuat dengan Kotlin dan Jetpack Compose. Datanya disimpan di database lokal (Room), jadi aplikasi bisa dijalankan tanpa server. README ini khusus membahas level user pasien, yang sekarang masih setengah jadi.
