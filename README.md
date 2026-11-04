@@ -67,15 +67,3 @@ Semua layar pasien ada di file `ui/pasien/PasienScreens.kt`. Di dalamnya ada ber
 Data dari database dikirim ke layar dalam bentuk Flow. Jadi begitu petugas farmasi mengubah status resep, layar pasien ikut berubah sendiri tanpa perlu ditutup dan dibuka lagi.
 
 Tampilannya kami sesuaikan untuk pengguna usia 30 tahun ke atas. Ukuran huruf isi 18sp dan tombol utama tingginya 56dp. Status juga tidak cuma dibedakan lewat warna, karena selalu ada teks dan ikonnya.
-
-## Yang sudah dan belum selesai
-
-Yang sudah jalan sekarang adalah login pasien, daftar resep aktif dan riwayat, timeline status, QR untuk mengambil obat, notifikasi dengan jumlah yang belum dibaca, info loket, dan ringkasan informasi obat.
-
-Yang belum, data masih tersimpan di satu HP, jadi belum bisa sinkron kalau pasien dan petugas memakai HP yang berbeda. Notifikasinya juga masih notifikasi lokal dan belum dikirim dari server. Halaman profil dan fitur ganti kata sandi untuk pasien juga belum dibuat.
-
-## Cara mencoba
-
-Buka folder RawatJalanJKN di Android Studio lewat File > Open, tunggu Gradle Sync selesai, lalu jalankan ke emulator atau HP dengan Android 8.0 ke atas. Data contoh dibuat otomatis waktu aplikasi pertama kali dibuka.
-
-Resep baru muncul di akun pasien setelah dokter mengirim resep. Jadi sebelum mencoba level pasien, daftarkan dulu Budi Santoso dari akun resepsionis (resepsionis / 123456), lalu kirim resep dari akun dokter (dokter1 / 123456). Kalau mau melihat resep dalam status siap diambil, proses juga resepnya dari akun farmasi (farmasi / 123456).
