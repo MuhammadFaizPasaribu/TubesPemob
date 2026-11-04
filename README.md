@@ -1,5 +1,59 @@
 # Aplikasi rawat jalan JKN Rumah Sakit Kensato
 
+Repositori ini berisi aplikasi Android untuk pelayanan rawat jalan pasien JKN (BPJS Kesehatan) di Rumah Sakit Kensato. Aplikasinya dibuat dengan Kotlin dan Jetpack Compose. Datanya disimpan di database lokal di HP memakai Room, jadi aplikasi bisa dijalankan tanpa server.
+
+Semua pengguna masuk lewat halaman login yang sama. Aplikasi mengenali peran pengguna dari akun yang dipakai, lalu langsung membuka halaman sesuai perannya. Tombol Keluar ada di kanan atas setiap halaman.
+
+## Level user yang kami gunakan
+
+Kami memakai empat level user. Urutannya mengikuti perjalanan pasien di rumah sakit: resepsionis mendaftarkan pasien, dokter memeriksa dan menulis resep, farmasi menyiapkan dan menyerahkan obat, lalu pasien memantau resepnya sampai obat diambil.
+
+### Resepsionis
+
+Resepsionis adalah petugas pendaftaran rawat jalan. Petugas mencari data pasien dengan No. RM, NIK, nomor kartu JKN, atau nama. Setelah pasien dipilih, ada enam langkah verifikasi yang harus diselesaikan. Petugas mencocokkan nama dan tanggal lahir pasien, mengecek kepesertaan JKN, memilih surat rujukan yang masih berlaku (maksimal 90 hari sejak terbit), dan memilih dokter sesuai poli tujuan rujukan beserta sisa kuotanya. Setelah itu petugas melakukan verifikasi wajah dan mencentang persetujuan umum (general consent) dari pasien.
+
+Kalau semua langkah sudah selesai, aplikasi menerbitkan nomor SEP dan tiket antrean. Tiketnya berisi nomor antrean seperti INT-001, nama poli, dokter, lokasi ruangan, dan perkiraan jam dipanggil. Resepsionis juga bisa melihat daftar kunjungan hari ini dan papan antrean. Papan antrean bisa dibuka dalam tampilan layar penuh untuk dipasang di TV atau tablet.
+
+### Dokter
+
+Setiap dokter punya akun sendiri dan terhubung ke satu poli. Di halaman antrean, dokter melihat pasien yang menunggu hari itu, memanggil pasien berikutnya, dan bisa memanggil ulang kalau pasien belum datang. Pasien yang tidak butuh obat bisa langsung ditandai selesai.
+
+Untuk pasien yang butuh obat, dokter menulis resep elektronik. Obat dipilih dari daftar obat rumah sakit (formularium) yang menampilkan stok tersedia. Untuk setiap obat, dokter mengisi dosis, jumlah, aturan pakai, dan cara pakai. Aturan pakai yang sering dipakai, misalnya 3 × 1 sehari, sudah tersedia sebagai pilihan cepat. Dokter juga bisa mencatat alergi dan berat badan pasien, dan aplikasi memberi peringatan kalau obat yang dipilih cocok dengan alergi pasien. Begitu resep dikirim ke farmasi, pemeriksaan otomatis ditandai selesai. Status resep yang sudah dikirim bisa dipantau di tab Resep hari ini.
+
+### Farmasi
+
+Halaman farmasi punya empat tab, yaitu Resep, Serah, Stok, dan Terima.
+
+Di tab Resep, apoteker melihat resep yang masuk dan mengeceknya dari sisi administratif, farmasetik, dan klinis sebelum memprosesnya. Saat resep diproses, aplikasi memilih batch obat yang tanggal kedaluwarsanya paling dekat (FEFO). Apoteker kemudian melihat etiket, mengecek ulang obatnya, dan menandai resep siap diambil. Saat itu juga pasien mendapat notifikasi.
+
+Di tab Serah, petugas memindai QR dari aplikasi pasien atau mengetik kode ambilnya. Obat diserahkan setelah nama dan tanggal lahir pasien dicocokkan dan cara minum obatnya dijelaskan. Pada tahap inilah stok obat berkurang dan tercatat sebagai pengeluaran di kartu stok.
+
+Tab Stok berisi daftar obat beserta peringatan untuk stok yang menipis, obat yang mendekati kedaluwarsa, dan obat yang tidak keluar selama tiga bulan. Kalau satu obat dibuka, terlihat daftar batch dan kartu stoknya, dan dari situ petugas bisa melakukan stok opname. Tab Terima dipakai untuk mencatat obat yang datang dari pemasok, lengkap dengan nomor faktur, nomor batch, dan tanggal kedaluwarsa.
+
+### Pasien
+
+Pasien memakai aplikasi untuk menebus obat. Pasien login dengan No. RM sebagai username dan tanggal lahir (ddmmyyyy) sebagai kata sandi.
+
+Beranda pasien punya dua tab. Tab Resep saya menampilkan resep yang masih aktif dan riwayat resep. Kartu resepnya berubah hijau kalau obat sudah siap diambil. Tab Notifikasi berisi pemberitahuan dari farmasi, dengan angka yang menunjukkan jumlah notifikasi yang belum dibaca.
+
+Kalau resep dibuka, pasien melihat statusnya dalam empat tahap: resep diterima farmasi, obat sedang disiapkan, obat siap diambil, dan obat sudah diambil. Di bawahnya ada kode QR dan kode ambil untuk ditunjukkan ke loket farmasi, lokasi dan jam layanan loket, lalu daftar obat dengan aturan pakainya. Setelah obat diambil, muncul ringkasan informasi obat. Layar pasien ikut berubah sendiri setiap kali farmasi mengubah status resep.
+
+Level pasien masih setengah jadi. Datanya masih tersimpan di satu HP sehingga belum bisa sinkron antarperangkat. Notifikasinya juga masih lokal dan belum dikirim dari server, dan halaman profil serta fitur ganti kata sandi belum dibuat.
+
+## Peran yang kami sederhanakan
+
+Di rumah sakit, pasien poli biasanya dipanggil oleh perawat. Di aplikasi ini fungsi itu kami gabungkan ke level dokter. Kasir tidak kami buat karena biaya pasien JKN ditanggung BPJS. Pengecekan kepesertaan JKN, penerbitan SEP, dan verifikasi wajah juga masih berupa simulasi, karena integrasi aslinya membutuhkan akses resmi dari BPJS.
+
+## Cara mencoba
+
+Buka folder RawatJalanJKN di Android Studio lewat File > Open, tunggu Gradle Sync selesai, lalu jalankan ke emulator atau HP dengan Android 8.0 ke atas. Data contoh dibuat otomatis saat aplikasi pertama kali dibuka.
+
+Akun resepsionis memakai username resepsionis, akun dokter memakai dokter1 sampai dokter5, dan akun farmasi memakai farmasi. Semuanya dengan sandi 123456. Untuk pasien, pakai akun Budi Santoso dengan No. RM 00012345 dan sandi 15011980.
+
+Supaya ada resep yang tampil di akun pasien, daftarkan dulu Budi Santoso dari akun resepsionis. Setelah itu kirim resep dari akun dokter yang dipilih saat pendaftaran (dokter1 untuk dr. Andi Pratama), lalu proses resepnya dari akun farmasi.
+
+# Aplikasi rawat jalan JKN Rumah Sakit Kensato
+
 Repositori ini berisi aplikasi Android untuk pelayanan rawat jalan pasien JKN di Rumah Sakit Kensato. Aplikasinya dibuat dengan Kotlin dan Jetpack Compose. Datanya disimpan di database lokal (Room), jadi aplikasi bisa dijalankan tanpa server. README ini khusus membahas level user pasien, yang sekarang masih setengah jadi.
 
 ## Level user pasien
