@@ -59,11 +59,3 @@ Halaman ini terbuka waktu pasien mengetuk salah satu resep. Paling atas ada time
 Di bawah timeline ada kode QR dan kode ambil yang bentuknya seperti AMB-7K3QPX. Pasien tinggal menunjukkan QR ini ke petugas farmasi, dan kalau kamera bermasalah, petugas bisa mengetik kode ambilnya. QR dibuat langsung di aplikasi memakai library ZXing. Setelah itu ada lokasi loket farmasi beserta jam layanannya, lalu daftar obat lengkap dengan jumlah, aturan pakai, dan cara pakainya.
 
 Setelah obat diambil, bagian QR tidak ditampilkan lagi. Gantinya muncul ringkasan informasi obat yang menjelaskan cara minum tiap obat, cara menyimpannya, dan apa yang perlu dilakukan kalau lupa minum.
-
-## Cara kerjanya di kode
-
-Semua layar pasien ada di file `ui/pasien/PasienScreens.kt`. Di dalamnya ada beranda (`PasienHome`), daftar resep (`TabResepSaya`), daftar notifikasi (`TabNotifikasi`), halaman detail (`DetailResepPasien`), dan timeline status (`TimelineStatus`). Datanya diambil lewat `PasienViewModel`, yang hanya memuat resep dan notifikasi milik pasien yang sedang login.
-
-Data dari database dikirim ke layar dalam bentuk Flow. Jadi begitu petugas farmasi mengubah status resep, layar pasien ikut berubah sendiri tanpa perlu ditutup dan dibuka lagi.
-
-Tampilannya kami sesuaikan untuk pengguna usia 30 tahun ke atas. Ukuran huruf isi 18sp dan tombol utama tingginya 56dp. Status juga tidak cuma dibedakan lewat warna, karena selalu ada teks dan ikonnya.
