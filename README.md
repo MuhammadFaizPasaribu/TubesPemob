@@ -1,61 +1,55 @@
-# Aplikasi rawat jalan JKN Rumah Sakit Kensato
+# Stok Obat Kensato
 
-Repositori ini berisi aplikasi Android untuk pelayanan rawat jalan pasien JKN (BPJS Kesehatan) di Rumah Sakit Kensato. Aplikasinya dibuat dengan Kotlin dan Jetpack Compose. Datanya disimpan di database lokal di HP memakai Room, jadi aplikasi bisa dijalankan tanpa server.
+Aplikasi Android untuk mencatat obat masuk dan obat keluar di gudang Instalasi Farmasi RS Kensato. Aplikasinya dibuat dengan Kotlin dan Jetpack Compose. Datanya disimpan di HP memakai Room, jadi bisa dijalankan tanpa server. Semua data di dalamnya adalah data contoh yang fiktif.
 
-Semua pengguna masuk lewat halaman login yang sama. Aplikasi mengenali peran pengguna dari akun yang dipakai, lalu langsung membuka halaman sesuai perannya. Tombol Keluar ada di kanan atas setiap halaman.
+## Cara kerjanya
 
-## Level user yang kami gunakan
+Stok tidak pernah diubah langsung. Setiap perubahan selalu lewat dokumen, dan ada lima jenis dokumen: terima obat dari PBF, distribusi ke ruangan, retur ke PBF, pemusnahan, dan stok opname. Petugas membuat dokumen, lalu apoteker memeriksa dan menyetujuinya. Stok baru berubah setelah dokumen disetujui, dan perubahannya ditulis sebagai baris baru di kartu stok. Baris kartu stok tidak bisa diubah atau dihapus (dijaga sampai ke database dengan trigger), jadi kalau ada yang salah, koreksinya dibuat lewat dokumen baru dan jejaknya tetap terlihat.
 
-Kami memakai empat level user. Urutannya mengikuti perjalanan pasien di rumah sakit: resepsionis mendaftarkan pasien, dokter memeriksa dan menulis resep, farmasi menyiapkan dan menyerahkan obat, lalu pasien memantau resepnya sampai obat diambil.
+Obat disimpan dalam satuan terkecilnya, misalnya tablet, kapsul, botol, atau vial. Di master obat dicatat isi kemasannya, contohnya 1 dus = 10 strip = 100 tablet. Waktu mengisi jumlah, petugas boleh memilih dus, strip, atau tablet, dan aplikasi langsung menampilkan hasilnya, misalnya "2 dus = 200 tablet". Jadi barang boleh dihitung per dus, tetapi yang tersimpan tetap jumlah tablet, sehingga tidak ada salah hitung antar satuan. Stok juga ditampilkan dengan cara yang mudah dibaca, misalnya "12 dus + 3 strip + 4 tablet".
 
-### Resepsionis
+Setiap obat dicatat per batch beserta tanggal kedaluwarsanya (ED). Saat distribusi ke ruangan, aplikasi memilih sendiri batch dengan ED paling dekat (FEFO), dan batch yang sudah kedaluwarsa tidak ikut dikeluarkan. Di beranda muncul peringatan untuk obat yang habis, stok di bawah minimum, ED kurang dari 3 atau 6 bulan, batch yang sudah kedaluwarsa, dan obat yang tidak keluar selama 3 bulan.
 
-Resepsionis adalah petugas pendaftaran rawat jalan. Petugas mencari data pasien dengan No. RM, NIK, nomor kartu JKN, atau nama. Setelah pasien dipilih, ada enam langkah verifikasi yang harus diselesaikan. Petugas mencocokkan nama dan tanggal lahir pasien, mengecek kepesertaan JKN, memilih surat rujukan yang masih berlaku (maksimal 90 hari sejak terbit), dan memilih dokter sesuai poli tujuan rujukan beserta sisa kuotanya. Setelah itu petugas melakukan verifikasi wajah dan mencentang persetujuan umum (general consent) dari pasien.
+## Cara aplikasi mencegah kesalahan
 
-Kalau semua langkah sudah selesai, aplikasi menerbitkan nomor SEP dan tiket antrean. Tiketnya berisi nomor antrean seperti INT-001, nama poli, dokter, lokasi ruangan, dan perkiraan jam dipanggil. Resepsionis juga bisa melihat daftar kunjungan hari ini dan papan antrean. Papan antrean bisa dibuka dalam tampilan layar penuh untuk dipasang di TV atau tablet.
+Saat menerima obat, ED wajib diisi. Obat yang sudah kedaluwarsa ditolak, sedangkan obat dengan sisa ED kurang dari 2 tahun boleh diterima asal ada alasannya (mengacu Permenkes 72/2016). Batch yang sama harus punya ED yang sama, faktur yang sama dari PBF yang sama tidak bisa dicatat dua kali, dan barang yang kemasannya rusak tidak boleh dicatat masuk. Kalau petugas memindai barcode, kodenya harus cocok dengan obat di master.
 
-### Dokter
+Saat mengeluarkan obat, stok tidak bisa minus. Pengecekan dilakukan dua kali, waktu dokumen dibuat dan waktu disetujui. Stok yang sedang dipakai dokumen lain yang belum disetujui juga ikut dihitung, jadi dua petugas tidak bisa memakai stok yang sama.
 
-Setiap dokter punya akun sendiri dan terhubung ke satu poli. Di halaman antrean, dokter melihat pasien yang menunggu hari itu, memanggil pasien berikutnya, dan bisa memanggil ulang kalau pasien belum datang. Pasien yang tidak butuh obat bisa langsung ditandai selesai.
+Stok opname memakai cara hitung buta. Petugas menghitung barang di rak tanpa melihat angka sistem, dan angka sistem baru dibuka setelah hitungan selesai. Kalau hasilnya berbeda, petugas wajib menulis alasan. Kalau stok berubah antara waktu dihitung dan waktu disetujui, aplikasi menolak persetujuan supaya barang dihitung ulang.
 
-Untuk pasien yang butuh obat, dokter menulis resep elektronik. Obat dipilih dari daftar obat rumah sakit (formularium) yang menampilkan stok tersedia. Untuk setiap obat, dokter mengisi dosis, jumlah, aturan pakai, dan cara pakai. Aturan pakai yang sering dipakai, misalnya 3 × 1 sehari, sudah tersedia sebagai pilihan cepat. Dokter juga bisa mencatat alergi dan berat badan pasien, dan aplikasi memberi peringatan kalau obat yang dipilih cocok dengan alergi pasien. Begitu resep dikirim ke farmasi, pemeriksaan otomatis ditandai selesai. Status resep yang sudah dikirim bisa dipantau di tab Resep hari ini.
+Persetujuan selalu melibatkan dua orang. Hanya apoteker yang boleh menyetujui, dan pembuat dokumen tidak bisa menyetujui dokumennya sendiri. Obat high alert, obat LASA (nama atau rupa mirip, ditulis dengan huruf tall man seperti cefTRIAXone dan cefoTAXime), serta psikotropika diberi label khusus, dan dokumennya ditandai supaya diperiksa lebih teliti.
 
-### Farmasi
+Barcode 2D GS1 pada kemasan obat (sesuai Peraturan BPOM 22/2022) bisa dipindai dengan kamera. Satu kali pindai mengisi nama obat, nomor batch, dan ED sekaligus, jadi petugas tidak perlu mengetik. PIN disimpan dalam bentuk hash, dan kalau salah 5 kali, akun dikunci 30 detik. Semua tindakan, dari masuk aplikasi sampai menyetujui dokumen, tercatat di jejak audit.
 
-Halaman farmasi punya empat tab, yaitu Resep, Serah, Stok, dan Terima.
+## Supaya mudah dipakai semua umur
 
-Di tab Resep, apoteker melihat resep yang masuk dan mengeceknya dari sisi administratif, farmasetik, dan klinis sebelum memprosesnya. Saat resep diproses, aplikasi memilih batch obat yang tanggal kedaluwarsanya paling dekat (FEFO). Apoteker kemudian melihat etiket, mengecek ulang obatnya, dan menandai resep siap diambil. Saat itu juga pasien mendapat notifikasi.
+Huruf dasarnya 18sp dan ikut membesar kalau ukuran huruf HP diperbesar. Ada juga tombol "Huruf" di beranda untuk memperbesar semua tulisan di dalam aplikasi. Tombol dibuat besar (minimal 48dp, tombol utama 56dp), warnanya berkontras tinggi, dan status selalu ditulis dengan kata, ikon, dan warna sekaligus, jadi tidak hanya mengandalkan warna. Menu di beranda tersusun satu kolom dengan keterangan singkat. Pekerjaan yang panjang dibagi menjadi tiga langkah, dan sebelum mengirim, petugas melihat kalimat konfirmasi yang jelas. Untuk masuk, pengguna cukup mengetuk namanya lalu menekan PIN 6 angka di tombol angka yang besar.
 
-Di tab Serah, petugas memindai QR dari aplikasi pasien atau mengetik kode ambilnya. Obat diserahkan setelah nama dan tanggal lahir pasien dicocokkan dan cara minum obatnya dijelaskan. Pada tahap inilah stok obat berkurang dan tercatat sebagai pengeluaran di kartu stok.
+## Cara mencoba
 
-Tab Stok berisi daftar obat beserta peringatan untuk stok yang menipis, obat yang mendekati kedaluwarsa, dan obat yang tidak keluar selama tiga bulan. Kalau satu obat dibuka, terlihat daftar batch dan kartu stoknya, dan dari situ petugas bisa melakukan stok opname. Tab Terima dipakai untuk mencatat obat yang datang dari pemasok, lengkap dengan nomor faktur, nomor batch, dan tanggal kedaluwarsa.
+Buka folder proyek di Android Studio lewat File > Open, tunggu Gradle Sync selesai, lalu jalankan ke emulator atau HP dengan Android 8.0 ke atas. Data contoh dibuat otomatis waktu aplikasi pertama kali dibuka.
 
-### Pasien
+Akun apoteker adalah apt. Maya Sari (PIN 111111) dan apt. Rudi Hartono (PIN 222222). Akun petugas adalah Dewi Lestari (PIN 333333) dan Bambang Prasetyo (PIN 444444).
 
-Pasien memakai aplikasi untuk menebus obat. Pasien login dengan No. RM sebagai username dan tanggal lahir (ddmmyyyy) sebagai kata sandi.
+Gambar contoh barcode untuk uji pindai ada di folder `contoh`. Buka gambarnya di layar laptop, lalu pindai dengan HP. Kalau memakai emulator, ketik saja kode yang tertulis di bawah tiap barcode ke kolom "Atau ketik kode barcode".
 
-Beranda pasien punya dua tab. Tab Resep saya menampilkan resep yang masih aktif dan riwayat resep. Kartu resepnya berubah hijau kalau obat sudah siap diambil. Tab Notifikasi berisi pemberitahuan dari farmasi, dengan angka yang menunjukkan jumlah notifikasi yang belum dibaca.
+## Alur demo yang disarankan
 
-Kalau resep dibuka, pasien melihat statusnya dalam empat tahap: resep diterima farmasi, obat sedang disiapkan, obat siap diambil, dan obat sudah diambil. Di bawahnya ada kode QR dan kode ambil untuk ditunjukkan ke loket farmasi, lokasi dan jam layanan loket, lalu daftar obat dengan aturan pakainya. Setelah obat diambil, muncul ringkasan informasi obat. Layar pasien ikut berubah sendiri setiap kali farmasi mengubah status resep.
+Masuk sebagai Dewi. Di beranda terlihat Cetirizine habis, Glimepiride di bawah minimum, Captopril punya batch kedaluwarsa, Omeprazole ED-nya kurang dari 3 bulan, dan ada 2 dokumen yang menunggu verifikasi.
 
-Level pasien masih setengah jadi. Datanya masih tersimpan di satu HP sehingga belum bisa sinkron antarperangkat. Notifikasinya juga masih lokal dan belum dikirim dari server, dan halaman profil serta fitur ganti kata sandi belum dibuat.
+Buka Terima obat, pilih PBF, isi nomor faktur, lalu tambahkan obat dengan memindai contoh barcode. Paracetamol batch PCT2911 akan diterima biasa, Amoxicillin batch AMX2805 akan meminta alasan karena ED-nya kurang dari 2 tahun, dan cefTRIAXone batch CTX2604 akan ditolak karena sudah kedaluwarsa. Setelah itu kirim dokumennya.
 
-# Aplikasi rawat jalan JKN Rumah Sakit Kensato
+Keluar, lalu masuk sebagai Maya. Buka Verifikasi, periksa dokumen dari Dewi, lalu setujui. Di Cek stok, buka obat yang tadi diterima, lalu lihat tab Kartu stok untuk melihat baris barunya.
 
-Repositori ini berisi aplikasi Android untuk pelayanan rawat jalan pasien JKN di Rumah Sakit Kensato. Aplikasinya dibuat dengan Kotlin dan Jetpack Compose. Datanya disimpan di database lokal (Room), jadi aplikasi bisa dijalankan tanpa server. README ini khusus membahas level user pasien, yang sekarang masih setengah jadi.
+Buka Keluarkan obat, pilih Distribusi ke ruangan, pilih IGD, lalu minta Paracetamol 15 strip. Aplikasi akan mengambil 100 tablet dari batch PCT2604 dulu karena ED-nya paling dekat, lalu sisanya dari batch PCT2610. Untuk pemusnahan, tombol "Tambahkan semua batch kedaluwarsa" langsung memasukkan Captopril batch CAP2301. Terakhir, coba Stok opname untuk satu obat, lalu buka Laporan untuk melihat mutasi bulan ini dan jejak audit.
 
-## Level user pasien
+## Isi kode
 
-Di aplikasi ini pasien cuma punya satu urusan, yaitu menebus obat setelah diperiksa dokter. Pasien masuk dengan No. RM sebagai username dan tanggal lahir sebagai kata sandi, ditulis tanpa pemisah (ddmmyyyy). Untuk mencoba, pakai akun Budi Santoso dengan No. RM 00012345 dan sandi 15011980.
+Kode ada di `app/src/main/java/com/kensato/stokobat`. Folder `domain` berisi aturan stok yang murni Kotlin, yaitu konversi kemasan, FEFO, cek ED, pembaca barcode GS1, dan keamanan PIN. Folder `data` berisi tabel Room, query, `Repository` (tempat semua pengecekan kesalahan), dan `DataAwal` untuk data contoh. Folder `ui` berisi layar per menu, dan `util` berisi sesi pengguna serta format tanggal dan angka.
 
-Setelah login, pasien masuk ke beranda dengan sapaan "Halo, Budi Santoso" dan tombol Keluar di kanan atas. Di bagian bawah ada dua tab. Tab Resep saya menampilkan resep yang masih aktif di atas, lalu riwayat resep yang sudah selesai di bawahnya. Setiap kartu resep berisi status, poli, nama dokter, tanggal, dan jumlah obat. Kalau obatnya sudah siap diambil, kartunya berubah hijau dan ada tulisan yang mengarahkan pasien ke loket farmasi.
+Unit test untuk aturan stok ada di `app/src/test`. Cara menjalankannya: klik kanan folder tersebut di Android Studio, lalu pilih Run 'Tests in ...'.
 
-Tab Notifikasi berisi pemberitahuan dari farmasi, misalnya saat obat sudah siap atau sudah diserahkan. Angka di ikon tab menunjukkan jumlah notifikasi yang belum dibaca, dan angka itu hilang begitu tabnya dibuka. Notifikasi bisa diketuk untuk langsung membuka resepnya. Saat obat siap, HP juga memunculkan notifikasi di status bar.
+## Batasan
 
-## Halaman detail resep
-
-Halaman ini terbuka waktu pasien mengetuk salah satu resep. Paling atas ada timeline status dengan empat tahap: resep diterima farmasi, obat sedang disiapkan, obat siap diambil, dan obat sudah diambil. Tahap yang sudah lewat diberi centang hijau beserta jamnya, sedangkan tahap yang sedang berjalan ditulis tebal. Di database, statusnya tetap disimpan sebagai TERKIRIM, DIPROSES, SIAP_DIAMBIL, dan SUDAH_DIAMBIL. Layar pasien cuma mengganti kode itu dengan kalimat yang lebih gampang dipahami.
-
-Di bawah timeline ada kode QR dan kode ambil yang bentuknya seperti AMB-7K3QPX. Pasien tinggal menunjukkan QR ini ke petugas farmasi, dan kalau kamera bermasalah, petugas bisa mengetik kode ambilnya. QR dibuat langsung di aplikasi memakai library ZXing. Setelah itu ada lokasi loket farmasi beserta jam layanannya, lalu daftar obat lengkap dengan jumlah, aturan pakai, dan cara pakainya.
-
-Setelah obat diambil, bagian QR tidak ditampilkan lagi. Gantinya muncul ringkasan informasi obat yang menjelaskan cara minum tiap obat, cara menyimpannya, dan apa yang perlu dilakukan kalau lupa minum.
+Aplikasi ini hanya mencatat satu gudang dan datanya tersimpan di satu HP. Aplikasi belum terhubung ke SIMRS, e-katalog, atau sistem BPOM, dan surat pesanan maupun berita acara pemusnahan hanya dicatat nomornya. Dokumen fisiknya tetap dibuat di luar aplikasi.
